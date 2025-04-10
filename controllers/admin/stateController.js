@@ -55,7 +55,8 @@ exports.getCitiesByState = asyncHandler(async (req, res) => {
       message: 'Please provide StateId',
     });
   }
-  const city = await prisma.city.findUnique({ where: { id: stateId } });
+  const city = await prisma.city.findMany({ where: { stateId: stateId } });
+  console.log(city);
   if (!city) {
     return res.status(404).json({
       status: 'Failed',

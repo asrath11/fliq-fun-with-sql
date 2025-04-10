@@ -1,5 +1,5 @@
 const { totp } = require('otplib');
-const Otp = require('../models/otpModel');
+const prisma = require('../connectDb');
 const env = require('dotenv');
 env.config({
   path: 'config.env',
@@ -17,10 +17,12 @@ function generateOtp() {
 //verify otp
 verifyOtp = async function (req, res) {
   const { otp } = req.body;
-  const userId = req.user._id; // Assuming the user is authenticated already
+  const userId = req.user.id; // Assuming the user is authenticated already
 
   // Fetch the most recent OTP record for the user
-  const otpRecord = await Otp.findOne({ userId }).sort({ createdAt: -1 });
+  const otpRecord = await prisma.otp
+    .findUnique({ userId })
+    .sort({ createdAt: -1 });
   if (!otpRecord) {
     return res.status(400).json({
       status: 'Failed',
