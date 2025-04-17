@@ -1,15 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -30,8 +25,18 @@ model State {
 model City {
   id      String @id @default(uuid())
   name    String @unique
-  state   State  @relation(fields: [stateId], references: [id])
   stateId String
+  Area    Area[]
+  state   State  @relation(fields: [stateId], references: [id])
+}
+
+model Area {
+  id     String @id @default(uuid())
+  name   String
+  cityId String
+  city   City   @relation(fields: [cityId], references: [id])
+
+  @@unique([name, cityId])
 }
 
 model Package {
@@ -58,6 +63,15 @@ model Otp {
   expiredAt DateTime
 }
 
+model addOn {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  category    Category?
+  displayType DisplayType?
+  price       Int
+  image       String?
+}
+
 enum Category {
   Decorations
   Cakes_EggLess_Cakes
@@ -69,13 +83,4 @@ enum Category {
 enum DisplayType {
   AddOns
   Gifts
-}
-
-model addOn {
-  id          String       @id @default(uuid())
-  name        String       @unique
-  category    Category?
-  displayType DisplayType?
-  price       Int
-  image       String?
 }
