@@ -333,8 +333,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.6.0
-   * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+   * Prisma Client JS version: 6.5.0
+   * Query Engine version: 173f8d54f8d52e692c7e27e72a88314ec7aeff60
    */
   export type PrismaVersion = {
     client: string
@@ -2164,7 +2164,7 @@ export namespace Prisma {
 
   /**
    * Fields of the User model
-   */
+   */ 
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
@@ -3134,7 +3134,7 @@ export namespace Prisma {
 
   /**
    * Fields of the State model
-   */
+   */ 
   interface StateFieldRefs {
     readonly id: FieldRef<"State", 'String'>
     readonly name: FieldRef<"State", 'String'>
@@ -4187,7 +4187,7 @@ export namespace Prisma {
 
   /**
    * Fields of the City model
-   */
+   */ 
   interface CityFieldRefs {
     readonly id: FieldRef<"City", 'String'>
     readonly name: FieldRef<"City", 'String'>
@@ -5243,7 +5243,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Area model
-   */
+   */ 
   interface AreaFieldRefs {
     readonly id: FieldRef<"Area", 'String'>
     readonly name: FieldRef<"Area", 'String'>
@@ -6422,7 +6422,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Package model
-   */
+   */ 
   interface PackageFieldRefs {
     readonly id: FieldRef<"Package", 'String'>
     readonly name: FieldRef<"Package", 'String'>
@@ -7425,7 +7425,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Otp model
-   */
+   */ 
   interface OtpFieldRefs {
     readonly id: FieldRef<"Otp", 'String'>
     readonly userId: FieldRef<"Otp", 'String'>
@@ -8466,7 +8466,7 @@ export namespace Prisma {
 
   /**
    * Fields of the addOn model
-   */
+   */ 
   interface addOnFieldRefs {
     readonly id: FieldRef<"addOn", 'String'>
     readonly name: FieldRef<"addOn", 'String'>
@@ -8974,7 +8974,7 @@ export namespace Prisma {
 
 
   /**
-   * Field references
+   * Field references 
    */
 
 
@@ -10099,7 +10099,7 @@ export namespace Prisma {
     name?: SortOrder
     cityId?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> =
+  export type JsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
         Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
         Required<JsonFilterBase<$PrismaModel>>
@@ -10182,7 +10182,7 @@ export namespace Prisma {
     defaultCapacity?: SortOrder
     maxCapacity?: SortOrder
   }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+  export type JsonWithAggregatesFilter<$PrismaModel = never> = 
     | PatchUndefined<
         Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
         Required<JsonWithAggregatesFilterBase<$PrismaModel>>
@@ -10577,7 +10577,7 @@ export namespace Prisma {
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
-  export type NestedJsonFilter<$PrismaModel = never> =
+  export type NestedJsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
         Required<NestedJsonFilterBase<$PrismaModel>>

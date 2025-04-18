@@ -10,13 +10,16 @@ const cors = require('cors');
 // Load environment variables
 env.config({ path: './config.env' });
 
-const swaggerDocs = require('./swagger/swaggerDocs'); // Ensure correct import
+const swaggerDocs = require('./swagger/swaggerDocs');
 
+//Routers
 const userRouter = require('./routes/userRouter');
 const stateRouter = require('./routes/stateRouter');
 const cityRouter = require('./routes/cityRouter');
 const packageRouter = require('./routes/packageRouter');
 const addOnsRouter = require('./routes/addOnsRouter');
+const areaRouter = require('./routes/areaRouter');
+const locationRouter = require('./routes/locationRouter');
 
 // Set view engine to EJS
 app.set('view engine', 'ejs');
@@ -33,10 +36,12 @@ app.use(morgan('dev')); // Log HTTP requests
 
 // API Routes
 app.use('/api/v1', userRouter);
-app.use('/api/v1/state', stateRouter);
-app.use('/api/v1/city', cityRouter);
-app.use('/api/v1/package', packageRouter);
+app.use('/api/v1/states', stateRouter);
+app.use('/api/v1/cities', cityRouter);
+app.use('/api/v1/packages', packageRouter);
 app.use('/api/v1/addOns', addOnsRouter);
+app.use('/api/areas', areaRouter);
+app.use('/api/v1/locations', locationRouter);
 
 // Initialize Swagger
 swaggerDocs(app);

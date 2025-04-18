@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -8,18 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id           String  @id @default(uuid())
-  email        String  @unique
-  password     String
-  userType     Int     @default(1)
-  refreshToken String?
-}
+model Area {
+  id     String @id @default(uuid())
+  name   String
+  cityId String
+  City   City   @relation(fields: [cityId], references: [id])
 
-model State {
-  id   String @id @default(uuid())
-  name String @unique
-  City City[]
+  @@unique([name, cityId])
 }
 
 model City {
@@ -27,16 +21,15 @@ model City {
   name    String @unique
   stateId String
   Area    Area[]
-  state   State  @relation(fields: [stateId], references: [id])
+  State   State  @relation(fields: [stateId], references: [id])
 }
 
-model Area {
-  id     String @id @default(uuid())
-  name   String
-  cityId String
-  city   City   @relation(fields: [cityId], references: [id])
-
-  @@unique([name, cityId])
+model Otp {
+  id        String   @id @default(uuid())
+  userId    String
+  otp       String
+  createdAt DateTime @default(now())
+  expiredAt DateTime
 }
 
 model Package {
@@ -55,12 +48,18 @@ model Package {
   videoLink           String?
 }
 
-model Otp {
-  id        String   @id @default(uuid())
-  userId    String
-  otp       String
-  createdAt DateTime @default(now())
-  expiredAt DateTime
+model State {
+  id   String @id @default(uuid())
+  name String @unique
+  City City[]
+}
+
+model User {
+  id           String  @id @default(uuid())
+  email        String  @unique
+  password     String
+  userType     Int     @default(1)
+  refreshToken String?
 }
 
 model addOn {
