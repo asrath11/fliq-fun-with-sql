@@ -33,8 +33,7 @@ exports.getLocations = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     status: 'success',
-    data: {
-      locations: result,
-    },
+    locations: result,
+    message: 'Locations fetched successfully',
   });
 });

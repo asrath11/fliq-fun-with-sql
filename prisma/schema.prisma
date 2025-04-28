@@ -9,7 +9,7 @@ datasource db {
 
 model Area {
   id     String @id @default(uuid())
-  name   String
+  name   String @unique
   cityId String
   City   City   @relation(fields: [cityId], references: [id])
 
@@ -17,11 +17,12 @@ model Area {
 }
 
 model City {
-  id      String @id @default(uuid())
-  name    String @unique
+  id      String    @id @default(uuid())
+  name    String    @unique
   stateId String
   Area    Area[]
-  State   State  @relation(fields: [stateId], references: [id])
+  State   State     @relation(fields: [stateId], references: [id])
+  Package Package[]
 }
 
 model Otp {
@@ -33,19 +34,32 @@ model Otp {
 }
 
 model Package {
-  id                  String  @id @default(uuid())
-  name                String  @unique
+  id                  String        @id @default(uuid())
+  name                String        @unique
   priceDescription    String
   capacityDescription String
-  city                String
+  cityId              String
+  city                City          @relation(fields: [cityId], references: [id])
   area                String
   price               Int
   extraPersonCost     Int
-  defaultCapacity     Int     @default(0)
-  maxCapacity         Int     @default(4)
+  minCapacity         Int           @default(0)
+  maxCapacity         Int           @default(4)
   imageCover          String
   images              Json
   videoLink           String?
+  SlotBooking         SlotBooking[]
+}
+
+model SlotBooking {
+  id             String   @id @default(uuid())
+  date           DateTime
+  timeSlot       String
+  numberOfPeople Int
+  packageId      String
+  package        Package  @relation(fields: [packageId], references: [id])
+  createdAt      DateTime @default(now())
+  status         String   @default("booked")
 }
 
 model State {
