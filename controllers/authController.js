@@ -81,8 +81,6 @@ exports.signIn = asyncHandler(async (req, res) => {
   const otpToken = generateOtp();
   const otpExpiry = new Date(Date.now() + 300000); // 5 minutes expiry
 
-  // // Delete existing OTPs and create new one
-  // await prisma.otp.deleteMany({ where: { userId: user.id } });
   await prisma.otp.create({
     data: {
       userId: user.id,

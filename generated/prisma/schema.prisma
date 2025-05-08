@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String  @id @default(uuid())
+  email        String  @unique
+  password     String
+  userType     Int     @default(1)
+  refreshToken String?
+}
+
+model State {
+  id   String @id @default(uuid())
+  name String @unique
+  City City[]
+}
+
+model City {
+  id      String @id @default(uuid())
+  name    String @unique
+  stateId String
+  Area    Area[]
+  state   State  @relation(fields: [stateId], references: [id])
+}
+
+model Area {
+  id     String @id @default(uuid())
+  name   String
+  cityId String
+  city   City   @relation(fields: [cityId], references: [id])
+
+  @@unique([name, cityId])
+}
+
+model Package {
+  id                  String  @id @default(uuid())
+  name                String  @unique
+  priceDescription    String
+  capacityDescription String
+  city                String
+  area                String
+  price               Int
+  extraPersonCost     Int
+  defaultCapacity     Int     @default(0)
+  maxCapacity         Int     @default(4)
+  imageCover          String
+  images              Json
+  videoLink           String?
+}
+
+model Otp {
+  id        String   @id @default(uuid())
+  userId    String
+  otp       String
+  createdAt DateTime @default(now())
+  expiredAt DateTime
+}
+
+model addOn {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  category    Category?
+  displayType DisplayType?
+  price       Int
+  image       String?
+}
+
+enum Category {
+  Decorations
+  Cakes_EggLess_Cakes
+  photograpy
+  Roses
+  Special_Effects
+}
+
+enum DisplayType {
+  AddOns
+  Gifts
+}

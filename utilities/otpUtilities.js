@@ -23,6 +23,7 @@ verifyOtp = async function (req, res) {
   const otpRecord = await prisma.otp
     .findUnique({ userId })
     .sort({ createdAt: -1 });
+  console.log(otpRecord);
   if (!otpRecord) {
     return res.status(400).json({
       status: 'Failed',
@@ -51,7 +52,7 @@ verifyOtp = async function (req, res) {
   }
 
   // Optionally, delete OTP after successful verification
-  await Otp.deleteOne({ _id: otpRecord._id });
+  await Otp.deleteOne({ id: otpRecord.id });
 
   res.status(200).json({
     status: 'success',

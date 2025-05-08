@@ -5,7 +5,7 @@ exports.createPackage = asyncHandler(async (req, res) => {
     name,
     priceDescription,
     capacityDescription,
-    city,
+    cityId,
     area,
     price,
     extraPersonCost,
@@ -20,6 +20,7 @@ exports.createPackage = asyncHandler(async (req, res) => {
   if (req.files) {
     if (image) {
       imageCover = image.filename;
+      console.log(imageCover);
     }
     if (multipleImages) {
       images = multipleImages.map((el) => el.filename);
@@ -30,7 +31,7 @@ exports.createPackage = asyncHandler(async (req, res) => {
       name,
       priceDescription,
       capacityDescription,
-      city,
+      cityId,
       area,
       price,
       extraPersonCost,
@@ -121,7 +122,7 @@ exports.updatePackage = asyncHandler(async (req, res) => {
     name,
     priceDescription,
     capacityDescription,
-    city,
+    cityId,
     area,
     price,
     extraPersonCost,
@@ -137,7 +138,7 @@ exports.updatePackage = asyncHandler(async (req, res) => {
     name,
     priceDescription,
     capacityDescription,
-    city,
+    cityId,
     area,
     price,
     extraPersonCost,
@@ -173,5 +174,54 @@ exports.updatePackage = asyncHandler(async (req, res) => {
     status: 'Success',
     message: 'Package updated successfully',
     package: updatedPackage,
+  });
+});
+
+exports.getPackagesByArea = asyncHandler(async (req, res) => {
+  const { area } = req.params;
+
+  if (!area) {
+    return res.status(400).json({
+      status: 'Failed',
+      message: 'Please provide area',
+    });
+  }
+
+  const packages = await prisma.package.findMany({
+    where: {
+      area: {
+        contains: area,
+        mode: 'insensitive', // Makes the search case-insensitive
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      priceDescription: true,
+      capacityDescription: true,
+      area: true,
+      price: true,
+      extraPersonCost: true,
+      imageCover: true,
+      images: true,
+      videoLink: true,
+      maxCapacity: true,
+      minCapacity: true,
+    },
+  });
+  if (!packages.length) {
+    return res.status(200).json({
+      status: 'Success',
+      message: 'There are no packages at the moment',
+      results: 0,
+      packages: [],
+    });
+  }
+
+  return res.status(200).json({
+    status: 'Success',
+    message: 'Successfully retrieved packages',
+    results: packages.length,
+    packages,
   });
 });
