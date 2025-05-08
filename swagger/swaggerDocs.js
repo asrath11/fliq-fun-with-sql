@@ -7,7 +7,7 @@ function swaggerDocs(app) {
     swaggerUi.serve,
     swaggerUi.setup(swaggerDocument, { explorer: true })
   );
-  console.log('swagger is at http://localhost:3000/api-docs');
+  console.log(`swagger is at http://localhost:${process.env.PORT}/api-docs`);
 }
 
 module.exports = swaggerDocs;
