@@ -56,7 +56,7 @@ app.use('/api/v1/slotbookings', slotBookingRouter);
 
 // Initialize Swagger
 swaggerDocs(app);
-app.use('/', () => {
+app.use('/home', () => {
   console.log('Home Page');
 });
 // Global Error Handler
