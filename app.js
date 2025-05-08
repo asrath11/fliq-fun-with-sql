@@ -40,6 +40,9 @@ app.use('/api/v1/addOns', addOnsRouter);
 
 // Initialize Swagger
 swaggerDocs(app);
+app.use('/', () => {
+  console.log('Home Page');
+});
 
 // Global Error Handler
 app.use((err, _req, res, _next) => {
