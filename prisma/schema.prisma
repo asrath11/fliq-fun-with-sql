@@ -7,51 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id           String  @id @default(uuid())
-  email        String  @unique
-  password     String
-  userType     Int     @default(1)
-  refreshToken String?
-}
-
-model State {
-  id   String @id @default(uuid())
-  name String @unique
-  City City[]
-}
-
-model City {
-  id      String @id @default(uuid())
-  name    String @unique
-  stateId String
-  Area    Area[]
-  state   State  @relation(fields: [stateId], references: [id])
-}
-
 model Area {
-  id     String @id
-  name   String
+  id     String @id @default(uuid())
+  name   String @unique
   cityId String
   City   City   @relation(fields: [cityId], references: [id])
 
   @@unique([name, cityId])
 }
 
-model Package {
-  id                  String  @id @default(uuid())
-  name                String  @unique
-  priceDescription    String
-  capacityDescription String
-  city                String
-  area                String
-  price               Int
-  extraPersonCost     Int
-  defaultCapacity     Int     @default(0)
-  maxCapacity         Int     @default(4)
-  imageCover          String
-  images              Json
-  videoLink           String?
+model City {
+  id      String    @id @default(uuid())
+  name    String    @unique
+  stateId String
+  Area    Area[]
+  State   State     @relation(fields: [stateId], references: [id])
+  Package Package[]
 }
 
 model Otp {
@@ -60,6 +31,58 @@ model Otp {
   otp       String
   createdAt DateTime @default(now())
   expiredAt DateTime
+}
+
+model Package {
+  id                  String        @id @default(uuid())
+  name                String        @unique
+  priceDescription    String
+  capacityDescription String
+  cityId              String
+  city                City          @relation(fields: [cityId], references: [id])
+  area                String
+  price               Int
+  extraPersonCost     Int
+  minCapacity         Int           @default(0)
+  maxCapacity         Int           @default(4)
+  imageCover          String
+  images              Json
+  videoLink           String?
+  SlotBooking         SlotBooking[]
+}
+
+model SlotBooking {
+  id             String   @id @default(uuid())
+  date           DateTime
+  timeSlot       String
+  numberOfPeople Int
+  packageId      String
+  package        Package  @relation(fields: [packageId], references: [id])
+  createdAt      DateTime @default(now())
+  status         String   @default("booked")
+}
+
+model State {
+  id   String @id @default(uuid())
+  name String @unique
+  City City[]
+}
+
+model User {
+  id           String  @id @default(uuid())
+  email        String  @unique
+  password     String
+  userType     Int     @default(1)
+  refreshToken String?
+}
+
+model addOn {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  category    Category?
+  displayType DisplayType?
+  price       Int
+  image       String?
 }
 
 enum Category {
@@ -73,13 +96,4 @@ enum Category {
 enum DisplayType {
   AddOns
   Gifts
-}
-
-model addOn {
-  id          String       @id @default(uuid())
-  name        String       @unique
-  category    Category?
-  displayType DisplayType?
-  price       Int
-  image       String?
 }
