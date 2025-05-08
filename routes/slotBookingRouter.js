@@ -6,4 +6,5 @@ router
   .get(slotBooking.getAllSlotBookings)
   .post(slotBooking.createSlotBooking);
 
+router.route('/:date').get(slotBooking.getSlotBookingsByDate);
 module.exports = router;
