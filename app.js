@@ -59,14 +59,11 @@ swaggerDocs(app);
 app.use('/home', (req, res) => {
   res.end('Home Page');
 });
-app.use('/about', (req, res) => {
-  res.end('about Page');
-});
 // Global Error Handler
-// app.use((err, _req, res, _next) => {
-//   console.error(err.stack);
-//   res.status(500).json({ message: 'Something went wrong' });
-// });
+app.use((err, _req, res, _next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong' });
+});
 
 // Start Server
 const PORT = process.env.PORT || 3000;
