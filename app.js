@@ -59,6 +59,9 @@ swaggerDocs(app);
 app.use('/home', (req, res) => {
   res.end('Home Page');
 });
+app.use('/about', (req, res) => {
+  res.end('about Page');
+});
 // Global Error Handler
 // app.use((err, _req, res, _next) => {
 //   console.error(err.stack);
